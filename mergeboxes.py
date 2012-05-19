@@ -24,7 +24,7 @@ def main():
 
     # Print new box file; user can redirect to file
     for box in merged:
-        print unicode(box)
+        print unicode(box).encode('utf-8')
 
     if opts.verbose:
         print "Merged %d out of %d boxes. Outputting %d boxes." %(stats["num_merged"], stats["total_in"], stats["total_out"])
