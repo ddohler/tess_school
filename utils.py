@@ -1,14 +1,14 @@
 from TesseractBox import TesseractBox
 import codecs
 
-def parse_boxfile(args):
+def parse_boxfile(file_path):
     """Read in a boxfile, return an array of TesseractBox objects"""
 
-    ifile = codecs.open(args[0],mode='r',encoding='utf-8')
-    boxes = list()
+    with codecs.open(file_path,mode='r',encoding='utf-8') as ifile:
+        boxes = list()
 
-    for line in ifile:
-        boxes.append(TesseractBox(line))
+        for line in ifile:
+            boxes.append(TesseractBox(line))
 
     return boxes
 

@@ -19,7 +19,7 @@ def main():
         parser.print_help()
         return 0
 
-    boxes = parse_boxfile(args)
+    boxes = parse_boxfile(args[0])
     (merged,stats) = merge_nearby_boxes(opts,boxes)
 
     # Print new box file; user can redirect to file
