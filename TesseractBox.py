@@ -1,6 +1,6 @@
 class TesseractBox:
 
-    text = ''
+    text = u''
 
     left = None
     right = None
@@ -18,15 +18,15 @@ class TesseractBox:
 
     def make_string(self):
         """Constructs a box string from the box object"""
-        string = ''
+        string = u''
         if self.bold:
-            string += "@"
+            string += u"@"
         if self.italic:
-            string += "$"
+            string += u"$"
         if self.uline:
-            string += "'"
+            string += u"'"
 
-        string +=  '%s %d %d %d %d %d' % (self.text, self.left, self.bottom, self.right, self.top, self.page)
+        string +=  u'%s %d %d %d %d %d' % (self.text, self.left, self.bottom, self.right, self.top, self.page)
 
         return string
 
@@ -34,7 +34,7 @@ class TesseractBox:
         if type(string) is str or type(string) is unicode:
             self.text = string
         else:
-            raise TypeError("Box text must be a string, not " + str(type(string)))
+            raise TypeError(u"Box text must be a string, not " + str(type(string)))
 
     def __init__(self, string=None):
 
@@ -70,11 +70,11 @@ class TesseractBox:
             if len(self.text) > 1:
                 i = 0
                 while (not self.bold or not self.italic or not self.uline) and i < len(self.text):
-                    if text[i] == '$' and not self.italic:
+                    if text[i] == u'$' and not self.italic:
                         self.italic = True
-                    elif text[i] == '@' and not self.bold:
+                    elif text[i] == u'@' and not self.bold:
                         self.bold = True
-                    elif text[i] == "'" and not self.uline:
+                    elif text[i] == u"'" and not self.uline:
                         self.uline = True
                     else:
                         self.text = self.text[i:]
