@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from moshpytt import TesseractBox
+from TesseractBox import TesseractBox
 import codecs
 import optparse
 
@@ -23,7 +23,7 @@ def main():
 
     # Print new box file; user can redirect to file
     for box in merged:
-        print box
+        print unicode(box)
 
     if opts.verbose:
         print "Merged %d out of %d boxes. Outputting %d boxes." %(stats["num_merged"], stats["total_in"], stats["total_out"])
