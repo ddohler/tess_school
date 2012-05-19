@@ -70,11 +70,11 @@ class TesseractBox:
             if len(self.text) > 1:
                 i = 0
                 while (not self.bold or not self.italic or not self.uline) and i < len(self.text):
-                    if text[i] == u'$' and not self.italic:
+                    if self.text[i] == u'$' and not self.italic:
                         self.italic = True
-                    elif text[i] == u'@' and not self.bold:
+                    elif self.text[i] == u'@' and not self.bold:
                         self.bold = True
-                    elif text[i] == u"'" and not self.uline:
+                    elif self.text[i] == u"'" and not self.uline:
                         self.uline = True
                     else:
                         self.text = self.text[i:]
