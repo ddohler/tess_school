@@ -1,4 +1,6 @@
 *.pyc
 *.tif
+*.box
+*.box2
 *.png
 *.swp

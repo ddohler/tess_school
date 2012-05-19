@@ -103,7 +103,6 @@ for fn in font_names:
         context.show_layout(layout)
 
         # Write to image 
-        # TODO write to multiple images for bold, italic, underline
         # TODO: Specify outfile on command line
         #print fontname
         #print fvar[2]
