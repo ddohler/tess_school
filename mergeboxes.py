@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+#TODO: Handle multiple boxfiles at once
 from TesseractBox import TesseractBox
 from utils import parse_boxfile, separation_x, merge_two_boxes
 import codecs
@@ -10,9 +10,10 @@ def main():
     parser = optparse.OptionParser(usage="Usage: %prog [-t threshold] boxfile")
     parser.add_option('-t', '--threshold', dest='threshold', action='store',
                       type='int', default=1, help='Adjacent boxes separated horizontally by THRESHOLD or fewer pixels will be merged. Horizontal separation is ignored. Note that this means that boxes located on different lines might be merged in certain (rare) circumstances. Defaults to 1 (boxes are adjacent).')
-
-    parser.add_option('-v', '--verbose', dest='verbose', action='store_true',
-                      help="Also print statistics about number of boxes merged")
+    parser.add_option('-o', '--output', dest='output', action='store',
+                      type='str', default='merged.box', help='Output file. Will overwrite existing files.')
+    parser.add_option('-d', '--dry', dest='dry', action='store_true',
+                      help='Perform a dry run. No files will be written, info about number of merged boxes will be output to the command line.')
     (opts, args) = parser.parse_args()
 
     if len(args) != 1:
@@ -22,12 +23,12 @@ def main():
     boxes = parse_boxfile(args[0])
     (merged,stats) = merge_nearby_boxes(opts,boxes)
 
-    # Print new box file; user can redirect to file
-    for box in merged:
-        print unicode(box).encode('utf-8')
-
-    if opts.verbose:
+    if opts.dry:
         print "Merged %d out of %d boxes. Outputting %d boxes." %(stats["num_merged"], stats["total_in"], stats["total_out"])
+    else:
+        with codecs.open(opts.output, mode='wb',encoding='utf-8') as outfile:
+            for box in merged:
+                outfile.write(unicode(box)+u'\n')
 
 def merge_nearby_boxes(opts,boxes):
     """Merge boxes in the passed array of boxes which are both adjacent and
@@ -64,8 +65,6 @@ def merge_nearby_boxes(opts,boxes):
 
     stats["total_out"] = len(output)
     return (output,stats)
-
-
 
 # If program is run directly
 if __name__ == "__main__":
