@@ -1,0 +1,25 @@
+tess_school
+--------------
+by Derek Dohler, dohler@gmail.com
+
+A basic set of tools to making it easier to train Tesseract. No Cube training yet.
+
+Installation:
+None, just download and run the appropriate scripts.
+
+Dependencies:
+-Tesseract 3.02 (everything except shape_clustering.sh should work with 3.01)
+-Python 2.6
+-ImageMagick
+-Pango, and Cairo bindings for Python necessary to automatically generate training images.
+
+Python Scripts:
+-text2img.py: Takes a ground-truth text file and automatically generates image files from the text, for use in training tesseract. Everything is hard coded at the moment, no command-line options yet. Eventually I'd like to have this generate the boxfile too.
+
+-merge_boxes.py: Merges nearby boxes in a boxfile resulting from tesseract oversegmenting characters. This is a common error that Tesseract makes and this script will quickly fix most instances of this problem.
+
+-align_boxfile.py: Changes a boxfile to match a ground-truth text file. Will abort and complain if the number of boxes doesn't match the number of characters in the file, so run this only after your boxes are in the right places.
+
+Shell scripts:
+-png2tif.sh: Uses ImageMagick to convert the PNG output from text2img.py to TIFF files. Tesseract can read PNG files, but sometimes seems to prefer TIFF.
+-auto_train.sh: Steps through the other shell scripts one by one. Needs to be in the same folder as your other scripts, and as the training files. All other scripts automate the steps necessary for tesseract training, and are named appropriately.
