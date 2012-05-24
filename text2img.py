@@ -11,12 +11,13 @@ MARGIN_X = 300
 MARGIN_Y = 300
 LINE_SPACE = 35 #TODO: Command-line opts
 LANG = "ka"
+TESS_LANG = "kat"
 
 # Set up decent spacing for box files
 attrs = pango.AttrList() #TODO: Command line opts
 attrs.insert(pango.AttrLanguage(LANG,0,-1))
 attrs.insert(pango.AttrLetterSpacing(10000,0,-1))
-attrs.insert(pango.AttrSize(36000,0,-1))
+attrs.insert(pango.AttrSize(48000,0,-1))
 attrs.insert(pango.AttrFallback(False,0,-1))
 attrs.insert(pango.AttrStyle(pango.STYLE_NORMAL,0,-1))
 attrs.insert(pango.AttrWeight(pango.WEIGHT_NORMAL,0,-1))
@@ -53,6 +54,7 @@ with codecs.open("text.txt") as text_file:
     for line in text_file:
         text += line + '\n'
 
+#TODO: Construct from command-line options
 font_names = [
     "Sans",
     "Serif",
@@ -60,8 +62,10 @@ font_names = [
 ]
 
 # (variant, reset,"desc")
+#TODO construct from command-line options
 font_variants = [
-    (pango.AttrStyle(pango.STYLE_OBLIQUE,0,-1),pango.AttrStyle(pango.STYLE_NORMAL,0,-1),"oblique"),
+    (pango.AttrStyle(pango.STYLE_NORMAL,0,-1),pango.AttrStyle(pango.STYLE_NORMAL,0,-1),""),
+    #(pango.AttrStyle(pango.STYLE_OBLIQUE,0,-1),pango.AttrStyle(pango.STYLE_NORMAL,0,-1),"oblique"),
     (pango.AttrStyle(pango.STYLE_ITALIC,0,-1),pango.AttrStyle(pango.STYLE_NORMAL,0,-1),"italic"),
     (pango.AttrWeight(pango.WEIGHT_HEAVY,0,-1),pango.AttrWeight(pango.WEIGHT_NORMAL,0,-1),"bold"),
     (pango.AttrUnderline(pango.UNDERLINE_SINGLE,0,-1),pango.AttrUnderline(pango.UNDERLINE_NONE,0,-1),"underline"),
@@ -106,7 +110,7 @@ for fn in font_names:
         # TODO: Specify outfile on command line
         #print fontname
         #print fvar[2]
-        with open(LANG+"."+fontname+"."+fvar[2]+".png", "wb") as image_file:
+        with open(TESS_LANG+"."+fontname+fvar[2]+".exp0.png", "wb") as image_file:
                 surf.write_to_png(image_file)
 
         attrs.change(fvar[1])
