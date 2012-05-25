@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #TODO: Handle multiple boxfiles at once
-from TesseractBox import TesseractBox
+from Tesseract3Box import Tesseract3Box
 from utils import parse_boxfile, separation_x, merge_two_boxes
 import codecs
 import optparse

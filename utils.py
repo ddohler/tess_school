@@ -1,14 +1,14 @@
-from TesseractBox import TesseractBox
+from Tesseract3Box import Tesseract3Box
 import codecs
 
 def parse_boxfile(file_path):
-    """Read in a boxfile, return an array of TesseractBox objects"""
+    """Read in a boxfile, return an array of Tesseract3Box objects"""
 
     with codecs.open(file_path,mode='r',encoding='utf-8') as ifile:
         boxes = list()
 
         for line in ifile:
-            boxes.append(TesseractBox(line))
+            boxes.append(Tesseract3Box(line))
 
     return boxes
 
@@ -29,7 +29,7 @@ def separation_y(box1,box2):
     return min(sep1,sep2)
 
 def merge_two_boxes(box1,box2):
-    merged = TesseractBox()
+    merged = Tesseract3Box()
 
     if box1.page != box2.page:
         raise ValueError("Can't merge boxes on different pages.")
