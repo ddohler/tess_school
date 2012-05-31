@@ -8,20 +8,25 @@ import optparse
 
 
 def main():
-    parser = optparse.OptionParser(usage="Usage: %prog [biu] font1...")
+    parser = optparse.OptionParser(usage="Usage: %prog [options] font1...")
     parser.add_option('-b', '--bold', dest='bold', action='store_true',
                       help='Generate bold output, if supported by font.')
     parser.add_option('-i', '--italic',dest='italic',action='store_true',
                       help='Generate italic output, if supported by font.')
     parser.add_option('-u', '--underline',dest='underline',action='store_true',
                       help='Generate underline output, if supported by font.')
+    parser.add_option('-l', '--list',dest='list_fonts',action='store_true',
+                      help='List available fonts and exit.')
+    parser.add_option('-f', '--file',dest='input_file',action='store',
+                      default='text.txt',help='Text file to use for image text.')
 
     (opts,args) = parser.parse_args()
 
-    if len(args) < 1:
+    if len(args) < 1 and not opts.list_fonts:
         parser.print_help()
         return 0
-    
+
+
     generate_images(opts,args)
 
 def generate_images(opts,args):
@@ -54,7 +59,9 @@ def generate_images(opts,args):
     font_map = pangocairo.cairo_font_map_get_default()
 
     # to see family names:
-    #print [f.get_name() for f in font_map.list_families()]
+    if opts.list_fonts:
+        print [f.get_name() for f in font_map.list_families()]
+        return
 
     # Set up pango layout
     layout = context.create_layout()
@@ -67,17 +74,11 @@ def generate_images(opts,args):
     # Read text from file TODO: Command line argument
     # TODO: Multiple files print to multiple image documents
     text = ''
-    with codecs.open("text.txt") as text_file:
+    with codecs.open(opts.input_file) as text_file:
         for line in text_file:
             text += line + '\n'
 
-    #TODO: Construct from command-line options
     font_names = args
-    #font_names = [
-    #    "Sans",
-    #    "Serif",
-    #    "Monospace",
-    #]
 
     # (variant, reset,"desc")
     #Font variants is an array of tuples consisting of: (AttrStyle, InverseAttrStyle, Name)
